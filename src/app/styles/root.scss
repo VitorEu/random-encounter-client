@@ -1,27 +1,25 @@
 :root {
-
-
-    --font-title: 32px
+  --font-title: 32px;
 }
 
 body {
-    background: var(--whitesmoke);
-    margin: 0;
+  background: var(--whitesmoke);
+  margin: 0;
 }
 
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .navbar {
-    color: var(--purpe);
-    background: var(--platinum);
-    padding: 25px;
-    padding-left: 50px;
+  color: var(--purpe);
+  background: var(--platinum);
+  padding: 25px;
+  padding-left: 50px;
 
-    .title { 
-        color: var(--purple);
-        font-size: var(--font-title);
-        text-decoration: none;
-    }
+  .title {
+    color: var(--purple);
+    font-size: var(--font-title);
+    text-decoration: none;
+  }
 }

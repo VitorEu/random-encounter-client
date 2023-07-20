@@ -1,5 +1,5 @@
 :root {
-  --font-title: 32px ;
+  --font-title: 32px;
 }
 
 body {
@@ -21,4 +21,4 @@ body {
   color: var(--purple);
   font-size: var(--font-title);
   text-decoration: none;
-}/*# sourceMappingURL=root.css.map */
+} /*# sourceMappingURL=root.css.map */

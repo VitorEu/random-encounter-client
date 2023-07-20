@@ -3,33 +3,50 @@
 @tailwind utilities;
 
 :root {
-  --whitesmoke: #F5F5F5;
-  --platinum: #E8E2E2;
-  --pumpkin: #FE7F2D;
-  --purple: #482973;
-  --black: #0E0E0E;
+	--whitesmoke: #f5f5f5;
+	--platinum: #e8e2e2;
+	--pumpkin: #fe7f2d;
+	--purple: #482973;
+	--light-purple: #4829731a;
+	--black: #0e0e0e;
+	--eerie-black: #242424;
 
-  --font-title: 32px
+	--font-title: 32px;
+}
+
+.glass {
+	/* From https://css.glass */
+	background: linear-gradient(#242424aa 55%, #010101fe);
+	border-radius: 16px;
+	box-shadow: 2px 4px 30px rgba(0, 0, 0, 0.9);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	border: 1px transparent rgb(254, 127, 45, 0.4);
 }
 
 body {
-  background: var(--whitesmoke);
-  margin: 0;
+	background: var(--platinum);
+	margin: 0;
+}
+
+option {
+	background-color: var(--eerie-black);
+	color: var(--platinum);
 }
 
 .bold {
-  font-weight: bold;
+	font-weight: bold;
 }
 
 .navbar {
-  color: var(--purpe);
-  background: var(--platinum);
-  padding: 25px;
-  padding-left: 50px;
+	color: var(--purpe);
+	background: var(--black);
+	border-bottom: 2px solid var(--pumpkin);
 }
 
-.title { 
-    color: var(--purple);
-    font-size: var(--font-title);
-    text-decoration: none;
+.title {
+	color: var(--platinum);
+	font-size: var(--font-title);
+	text-decoration: none;
+	border: 0;
 }
