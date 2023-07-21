@@ -1,6 +1,6 @@
 'use client'
 import { v4 } from "uuid";
-import { useState } from "react";
+import { HTMLInputTypeAttribute, useState } from "react";
 
 export interface InputTextProps {
     title?: string;
@@ -8,7 +8,9 @@ export interface InputTextProps {
     value: string | undefined;
     icon?: React.ElementType<any> | undefined;
     onChange: (value: string) => void;
+    onBlur?: () => void;
     wClass?: string;
+    type?: HTMLInputTypeAttribute;
 }
 
 const InputText = ({
@@ -16,6 +18,8 @@ const InputText = ({
     value,
     icon,
     onChange,
+    type = 'text',
+    onBlur,
     placeholder,
     wClass = "w-72",
 }: InputTextProps) => {
@@ -33,7 +37,9 @@ const InputText = ({
                 placeholder={placeholder}
                 className={`h-8 ${wClass} p-1 bg-black bg-opacity-0 outline-none border-b-2 rounded-s transition text-[var(--platinum)] focus:border-[var(--pumpkin)] focus:bg-opacity-10`}
                 id={title}
+                type={type}
                 value={textValue}
+                onBlur={() => onBlur && onBlur()}
                 onChange={({ target }) => {
                     setTextValue(target.value);
                     onChange(target.value);

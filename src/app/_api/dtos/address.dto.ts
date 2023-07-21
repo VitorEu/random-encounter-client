@@ -9,8 +9,15 @@ interface ProvinceDTO {
     name: string;
     countryId: string;
 }
+interface CityDTO {
+    id: string;
+    name: string;
+    stateId: string;
+    countryId: string;
+}
 
 export type {
     CountryDTO,
-    ProvinceDTO
+    ProvinceDTO,
+    CityDTO
 }
