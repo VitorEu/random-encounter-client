@@ -6,7 +6,10 @@
 	--whitesmoke: #f5f5f5;
 	--platinum: #e8e2e2;
 	--pumpkin: #fe7f2d;
+	--pumpkin-dark: #d36e2a;
+	--pumpkin-dark-2: #583015;
 	--purple: #482973;
+	--light-purple-2: #ba89ff;
 	--light-purple: #4829731a;
 	--black: #0e0e0e;
 	--eerie-black: #242424;
@@ -14,18 +17,56 @@
 	--font-title: 32px;
 }
 
-.glass {
-	/* From https://css.glass */
-	background: linear-gradient(#242424aa 55%, #010101fe);
+@layer utilities {
+	@variants responsive {
+		/* Hide scrollbar for Chrome, Safari and Opera */
+		.no-scrollbar::-webkit-scrollbar {
+			display: none;
+		}
+
+		/* Hide scrollbar for IE, Edge and Firefox */
+		.no-scrollbar {
+			-ms-overflow-style: none; /* IE and Edge */
+			scrollbar-width: none; /* Firefox */
+		}
+	}
+}
+
+.bg-adventurers-flipped {
+	background-image: url("https://i.imgur.com/dHh1WWH.png");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
 	border-radius: 16px;
+}
+
+.bg-giant-flipped {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/4ESOCp8aYFNJkSY5BG5yag/4799a4fe39a964459a7ad7031687ac0c/Volo_1920x1080_New_Wallpaper.jpeg");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
+}
+
+.bg-tasha-dark {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/3lwEFqFyhil8tJ3FzGFRrR/5286da6768e05ecee6ade0d0486cd366/TCoE_1920x1080_Wallpaper.jpeg");
+	opacity: 0.5;
+}
+
+.glass {
+	background: linear-gradient(#242424aa 55%, #010101fe);
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	box-shadow: 2px 4px 30px rgba(0, 0, 0, 0.9);
-	backdrop-filter: blur(6px);
+	backdrop-filter: blur(9px);
 	-webkit-backdrop-filter: blur(6px);
 	border: 1px transparent rgb(254, 127, 45, 0.4);
 }
 
 body {
-	background: var(--platinum);
+	background: var(--black);
 	margin: 0;
 }
 
