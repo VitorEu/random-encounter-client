@@ -15,6 +15,9 @@ module.exports = {
         tasha: "url('https://images.ctfassets.net/swt2dsco9mfe/3lwEFqFyhil8tJ3FzGFRrR/5286da6768e05ecee6ade0d0486cd366/TCoE_1920x1080_Wallpaper.jpeg')",
         forest: "url('https://i.imgur.com/cz9rSni.png')",
       },
+      backgroundPosition: {
+        c1: "-900px top"
+      }
     },
   },
   plugins: [],

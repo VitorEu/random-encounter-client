@@ -3,7 +3,7 @@ import { v4 } from "uuid";
 import { InputText } from "./InputText";
 import { FaMagnifyingGlass } from 'react-icons/fa6'
 
-interface SelectItem {
+export interface SelectItem {
     id: string,
     value: string
 }
@@ -38,25 +38,9 @@ const SelectMenu = ({
 
     const [renderDropdown, setRenderDropdown] = useState<boolean>(false);
 
-    const selectItems = () => {
-        let propList: JSX.Element[] = [];
-        if (!workList.length) setWorkList(items)
-        workList.forEach((item: SelectItem) => {
-            propList.push(
-                <button type="button"
-                    className="hover:bg-[var(--pumpkin-dark-2)] p-2 cursor-pointer text-left text-[var(--platinum)] rounded-lg ml-7"
-                    onClick={async (data) => {
-                        setItemSelect(item.value)
-                        onSelect(item.id)
-                        setRenderDropdown(false)
-                    }}
-                    key={item.id}>
-                    {item.value}
-                </button>)
-        })
-
-        return propList;
-    }
+    // useEffect(() => {
+    //     selectItems();
+    // }, [items, itemSelect])
 
     const filterItems = (value: string) => {
         const filteredList: SelectItem[] = items.filter(item => {
@@ -66,8 +50,30 @@ const SelectMenu = ({
         setWorkList(filteredList);
     }
 
+    const selectItems = () => {
+        let propList: JSX.Element[] = [];
+        if (!workList.length) setWorkList(items)
+        workList.forEach((item: SelectItem) => {
+            propList.push(
+                <button type="button"
+                    className="hover:bg-[var(--pumpkin-dark-2)] p-2 cursor-pointer text-left text-[var(--platinum)] rounded-lg ml-7"
+                    onClick={async (data) => {
+                        setItemSelect(item.value);
+                        setRenderDropdown(false);
+                        onSelect(item.id);
+                        setWorkList(items);
+                    }}
+                    key={item.id}>
+                    {item.value}
+                </button>
+            )
+        })
+
+        return propList;
+    }
+
     return (
-        <div className="flex flex-col"
+        <div className={`flex flex-col ${disabled && 'opacity-50'}`}
             onMouseLeave={() => setRenderDropdown(false)}>
             <label htmlFor={title} className="text-[var(--platinum)] ml-1">
                 <span>
@@ -84,8 +90,8 @@ const SelectMenu = ({
                 disabled={disabled}
                 onFocus={() => setRenderDropdown(true)}
                 onChange={({ target }) => {
-                    setItemSelect(target.value)
                     onChange && onChange(target.value);
+                    setItemSelect(target.value)
                 }}
                 readOnly
             />

@@ -7,7 +7,7 @@ export interface InputTextProps {
     title?: string;
     placeholder?: string;
     value: string | undefined;
-    icon: JSX.Element;
+    icon?: JSX.Element;
     onChange: (value: string) => void;
     onBlur?: () => void;
     wClass?: string;

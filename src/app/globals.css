@@ -50,9 +50,13 @@
 	border-radius: 16px;
 }
 
-.bg-tasha-dark {
+.bg-tasha-flipped {
 	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/3lwEFqFyhil8tJ3FzGFRrR/5286da6768e05ecee6ade0d0486cd366/TCoE_1920x1080_Wallpaper.jpeg");
-	opacity: 0.5;
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
 }
 
 .glass {

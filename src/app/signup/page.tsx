@@ -3,7 +3,7 @@ import React, { FormEvent, useEffect, useReducer, useState } from "react";
 import { InputText } from "../_components/InputText";
 import { User } from "@/model/user/user.type";
 import { Button } from "../_components/Button";
-import { SelectMenu } from "../_components/SelectMenu";
+import { SelectItem, SelectMenu } from "../_components/SelectMenu";
 import addressRequest from "../_api/address.request";
 import capitalize from 'capitalize';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -16,9 +16,9 @@ import { AxiosError } from "axios";
 export default function Page() {
 
     const [newUser, setNewUser] = useState<User>({} as User);
-    const [countryList, setCountryList] = useState<any[]>([]);
-    const [stateList, setStateList] = useState<any[]>([]);
-    const [cityList, setCityList] = useState<any[]>([]);
+    const [countryList, setCountryList] = useState<SelectItem[]>([]);
+    const [stateList, setStateList] = useState<SelectItem[]>([]);
+    const [cityList, setCityList] = useState<SelectItem[]>([]);
 
     const [renderPassMismatch, setRenderPassMismatch] = useState<boolean>(false)
     const [renderWeakPass, setRenderWeakPass] = useState<boolean | undefined>(false)
@@ -53,7 +53,6 @@ export default function Page() {
             try {
                 var response = await authRequest.registerUser(userBody);
             } catch (ex: AxiosError | any) {
-                console.log("🚀 ~ file: page.tsx:56 ~ submitForm ~ response:", ex)
                 setDuplicateEmail(ex?.response.status == 409);
             }
         }
@@ -88,7 +87,6 @@ export default function Page() {
     }
 
     const getCity = async (state: string) => {
-        console.log(state)
         const formattedCities: any[] = (await addressRequest.getCityList(undefined, state))?.map(state => {
             return { id: state.id, value: state.name }
         });
@@ -148,7 +146,6 @@ export default function Page() {
                                     value={newUser.country}
                                     title="Country"
                                     onSelect={(value: string) => {
-                                        console.log(value)
                                         newUser.country = value;
                                         setNewUser(newUser);
                                         getState(value);
@@ -170,6 +167,7 @@ export default function Page() {
                                         setEnableCitySelection(true);
                                     }}
                                     required
+                                    search
                                 />
                                 <SelectMenu
                                     items={cityList}
@@ -182,6 +180,7 @@ export default function Page() {
                                         setNewUser(newUser);
                                     }}
                                     required
+                                    search
                                 />
                                 <div className="flex flex-row gap-10">
                                     <InputText
@@ -215,7 +214,7 @@ export default function Page() {
                                     type="submit"
                                     disabled={renderPassMismatch || renderWeakPass}
                                     labelClassName="!text-[var(--eerie-black)]"
-                                    className="w-[100%] justify-end bg-[var(--pumpkin)] hover:bg-[var(--pumpkin-dark)]" />
+                                    className="w-[100%] justify-end bg-[var(--pumpkin)] hover:bg-[var(--pumpkin-dark)] mt-4" />
 
                                 <div className="text-[var(--pumpkin)] text-sm flex flex-col gap-2">
                                     {renderPassMismatch &&
