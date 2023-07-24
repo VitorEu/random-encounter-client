@@ -28,7 +28,7 @@ const Button = ({
             type={type}
             disabled={disabled}>
             {icon && <Icon />}
-            <span className={`uppercase text-[var(--platinum)] text-sm ${labelClassName}`}>
+            <span className={`text-[var(--platinum)] text-sm ${labelClassName}`}>
                 {label}
             </span>
         </button>

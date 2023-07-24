@@ -35,7 +35,7 @@ function InputText({
             <label htmlFor={title} className="text-[var(--platinum)] ml-1">
                 <span>
                     {title}
-                    {required &&
+                    {required && title &&
                         <span className="text-[var(--pumpkin)]"> *</span>}
                 </span>
             </label>

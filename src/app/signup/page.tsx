@@ -11,6 +11,10 @@ import { RegExUtil } from "../_utils/regex.util";
 import authRequest from "../_api/auth.request";
 import { Alert } from "@mui/material";
 import { AxiosError } from "axios";
+import Toast from "../_utils/toast.config";
+import { ToastContainer, toast } from "react-toastify";
+import toastConfig from "../_utils/toast.config";
+import Link from "next/link";
 
 
 export default function Page() {
@@ -53,20 +57,29 @@ export default function Page() {
             try {
                 var response = await authRequest.registerUser(userBody);
             } catch (ex: AxiosError | any) {
-                setDuplicateEmail(ex?.response.status == 409);
+                if (ex?.response.status == 409) {
+                    toast.error("Email already in use", toastConfig);
+                }
             }
         }
     }
 
+    const validateFields = () => {
+        newUser.password && passStrongness(newUser.password)
+        confirmPass && passMatch(confirmPass);
+    }
+
     const passMatch = (confirmPass: string) => {
-        if (confirmPass) {
-            setRenderPassMismatch(confirmPass !== newUser.password);
+        if (confirmPass && (confirmPass !== newUser.password)) {
+            toast.error('Password does not match', toastConfig)
+            setRenderPassMismatch(true);
         }
     }
 
     const passStrongness = (pass: string) => {
-        if (pass) {
-            setRenderWeakPass(!RegExUtil.password.test(pass));
+        if (pass && !RegExUtil.password.test(pass)) {
+            toast.error("Password must have: atleast 8 characters long, lower and upper case letters, a number and a special symbol [_#?!@$%^&*-].", toastConfig);
+            setRenderWeakPass(true)
         }
     }
 
@@ -95,11 +108,12 @@ export default function Page() {
     }
 
     return (
-        <main className="bg-lich p-[2.80rem] flex flex-row">
+        <main className="bg-lich p-[2.80rem] flex flex-row items-center">
             <div className="flex flex-row justify-end mr-16">
                 <div className="bg-giant-flipped bg-[-550px] w-[50vw] flex flex-row justify-start ">
-                    <div className="flex flex-col justify-between items-start w-[31.5rem] h-[80vh] p-10 glass scale-x-[-1] ">
+                    <div className="flex flex-col justify-evenly items-center w-[31.5rem] h-[80vh] p-10 glass scale-x-[-1] ">
                         <form
+                            autoComplete="false"
                             className="flex flex-col"
                             onSubmit={(event) => {
                                 submitForm(event)
@@ -189,8 +203,6 @@ export default function Page() {
                                         type="password"
                                         wClass="w-[100%]"
                                         onChange={(value: string) => {
-                                            passStrongness(value)
-                                            passMatch(value);
                                             newUser.password = value;
                                             setNewUser(newUser);
                                         }}
@@ -204,32 +216,49 @@ export default function Page() {
                                         wClass="w-[100%]"
                                         onChange={(value: string) => {
                                             setConfirmPass(value);
-                                            passMatch(value);
                                         }}
                                         required
                                     />
                                 </div>
                                 <Button
-                                    label="Submit"
+                                    label="Sign up"
                                     type="submit"
-                                    disabled={renderPassMismatch || renderWeakPass}
+                                    onClick={validateFields}
                                     labelClassName="!text-[var(--eerie-black)]"
-                                    className="w-[100%] justify-end bg-[var(--pumpkin)] hover:bg-[var(--pumpkin-dark)] mt-4" />
+                                    className="w-[100%] justify-end bg-[var(--pumpkin-dark)] hover:bg-[var(--pumpkin)] mt-4" />
 
                                 <div className="text-[var(--pumpkin)] text-sm flex flex-col gap-2">
-                                    {renderPassMismatch &&
-                                        <Alert severity="error"> Password does not match </Alert>
-                                    }
-                                    {renderWeakPass &&
-                                        <Alert severity="warning">- Password must have: atleast 8 characters long, lower and upper case letters, a number, and a special symbol [_#?!@$%^&*-].</Alert>
-                                    }
                                     {duplicateEmail &&
-                                        <Alert severity="error"> Email already in use </Alert>
+                                        <Alert severity="error">  </Alert>
                                     }
                                 </div>
                             </div>
                         </form>
+                        <div className="w-[100%]">
+                            <div className="flex flex-row justify-between items-center w-[100%]">
+                                <div className="bg-[var(--platinum)] h-[4px] w-[26%] rounded-[5px]" />
+                                <span className="text-white">Already have an account?</span>
+                                <div className="bg-[var(--platinum)] h-[4px] w-[26%] rounded-[5px]" />
+                            </div>
+
+                            <Link href="/signin" >
+                                <Button
+                                    label="Sign in"
+                                    type="button"
+                                    labelClassName=""
+                                    className="w-[100%] justify-end mt-4" />
+                            </Link>
+
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div className="flex flex-col justify-center mr-16 bg-[var(--eerie-black)] h-fit">
+                <div className="text-[var(--platinum)] text-4xl ">
+                    <span className="bold">Calling All Adventurers: </span>
+                    <span>
+                        Whether you're a seasoned dungeon master or a curious newcomer, Random Encounter welcomes players of all levels to join our vibrant community of RPG enthusiasts.
+                    </span>
                 </div>
             </div>
             <ReCAPTCHA

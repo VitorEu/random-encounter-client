@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import { Button } from "./_components/Button";
 import Link from "next/link";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const font = Roboto({
 	subsets: ["latin"],
@@ -30,18 +32,15 @@ export default function RootLayout({
 					</div>
 					<div>
 						<Link href="/signin">
-							<Button
-								label="Sign in"
-								className="mr-6 !border-0 "
-								onClick={() => console.log("teste")}
-							/>
+							<Button label="Sign in" className="uppercase mr-6 !border-0" />
 						</Link>
 						<Link href="/signup">
-							<Button label="Sign up" onClick={() => console.log("teste")} />
+							<Button label="Sign up" className="uppercase" />
 						</Link>
 					</div>
 				</nav>
 				{children}
+				<ToastContainer limit={2} />
 			</body>
 		</html>
 	);

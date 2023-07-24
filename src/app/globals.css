@@ -17,6 +17,14 @@
 	--font-title: 32px;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-text-fill-color: var(--platinum) !important;
+	transition: background-color 9999s ease-in-out 0s;
+}
+
 @layer utilities {
 	@variants responsive {
 		/* Hide scrollbar for Chrome, Safari and Opera */
@@ -57,6 +65,26 @@
 	-webkit-transform: scaleX(-1);
 	transform: scaleX(-1);
 	border-radius: 16px;
+}
+
+.bg-tiamat-flipped {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/2Fz3lMJTrFYz5VwiZtnSIs/aade483b1d7ada301186a1fe01a0034c/Tiamat_1280x960.jpeg");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
+}
+
+.bg-linear-gradient-1 {
+	background: linear-gradient(#010101fe 95%, var(--pumpkin));
+}
+
+.flip {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
 }
 
 .glass {
