@@ -9,6 +9,7 @@ interface ProvinceDTO {
     name: string;
     countryId: string;
 }
+
 interface CityDTO {
     id: string;
     name: string;
@@ -16,8 +17,18 @@ interface CityDTO {
     countryId: string;
 }
 
+interface AddressDTO {
+    id: string;
+    createdAt: Date;
+    description: string;
+    city: CityDTO;
+    province: ProvinceDTO;
+    country: CountryDTO;
+}
+
 export type {
     CountryDTO,
     ProvinceDTO,
-    CityDTO
+    CityDTO,
+    AddressDTO
 }
