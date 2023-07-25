@@ -1,7 +1,7 @@
 "use client";
-import React, { FormEvent, useEffect, useReducer, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { InputText } from "../_components/InputText";
-import { User } from "@/model/user/user.type";
+import { User, UserBody } from "@/model/user/user.type";
 import { Button } from "../_components/Button";
 import { SelectItem, SelectMenu } from "../_components/SelectMenu";
 import addressRequest from "../_api/address.request";
@@ -11,9 +11,7 @@ import { RegExUtil } from "../_utils/regex.util";
 import authRequest from "../_api/auth.request";
 import { Alert } from "@mui/material";
 import { AxiosError } from "axios";
-import Toast from "../_utils/toast.config";
-import { ToastContainer, toast } from "react-toastify";
-import toastConfig from "../_utils/toast.config";
+import { error, toastConfig } from "../_utils/toast.config";
 import Link from "next/link";
 
 
@@ -39,7 +37,7 @@ export default function Page() {
     const submitForm = async (event: FormEvent) => {
         event.preventDefault();
         if (!renderPassMismatch && !renderWeakPass) {
-            const userBody = {
+            const userBody: UserBody = {
                 user: {
                     name: `${newUser.firstName} ${newUser.lastName}`,
                     email: newUser.email,
@@ -47,7 +45,7 @@ export default function Page() {
                     password: newUser.password
                 },
                 address: {
-                    description: 'Teste',
+                    description: '  ',
                     cityId: newUser.city,
                     provinceId: newUser.state,
                     countryId: newUser.country
@@ -58,7 +56,7 @@ export default function Page() {
                 var response = await authRequest.registerUser(userBody);
             } catch (ex: AxiosError | any) {
                 if (ex?.response.status == 409) {
-                    toast.error("Email already in use", toastConfig);
+                    error("Email already in use");
                 }
             }
         }
@@ -71,14 +69,14 @@ export default function Page() {
 
     const passMatch = (confirmPass: string) => {
         if (confirmPass && (confirmPass !== newUser.password)) {
-            toast.error('Password does not match', toastConfig)
+            error('Password does not match')
             setRenderPassMismatch(true);
         }
     }
 
     const passStrongness = (pass: string) => {
         if (pass && !RegExUtil.password.test(pass)) {
-            toast.error("Password must have: atleast 8 characters long, lower and upper case letters, a number and a special symbol [_#?!@$%^&*-].", toastConfig);
+            error("Password must have: atleast 8 characters long, lower and upper case letters, a number and a special symbol [_#?!@$%^&*-].");
             setRenderWeakPass(true)
         }
     }
@@ -108,10 +106,11 @@ export default function Page() {
     }
 
     return (
-        <main className="bg-lich p-[2.80rem] flex flex-row items-center">
-            <div className="flex flex-row justify-end mr-16">
+        <main className="bg-saltmarsh bg-left-bottom p-[2.80rem] flex flex-row justify-end items-center">
+            <div className="backdrop-brightness-[0.5] backdrop-blur-0 h-full w-full absolute left-0 right-0" />
+            <div className="flex flex-row justify-end ml-16 flip">
                 <div className="bg-giant-flipped bg-[-550px] w-[50vw] flex flex-row justify-start ">
-                    <div className="flex flex-col justify-evenly items-center w-[31.5rem] h-[80vh] p-10 glass scale-x-[-1] ">
+                    <div className="flex flex-col justify-evenly items-center w-[31.5rem] h-[80vh] p-10 glass flip ">
                         <form
                             autoComplete="false"
                             className="flex flex-col"
@@ -224,17 +223,17 @@ export default function Page() {
                                     label="Sign up"
                                     type="submit"
                                     onClick={validateFields}
-                                    labelClassName="!text-[var(--eerie-black)]"
-                                    className="w-[100%] justify-end bg-[var(--pumpkin-dark)] hover:bg-[var(--pumpkin)] mt-4" />
+                                    labelClassName="!text-[var(--black)]"
+                                    className="w-[100%] justify-end bg-[var(--dark-mint)] hover:bg-[var(--mint)] mt-4" />
 
-                                <div className="text-[var(--pumpkin)] text-sm flex flex-col gap-2">
+                                <div className="text-[var(--mint)] text-sm flex flex-col gap-2">
                                     {duplicateEmail &&
                                         <Alert severity="error">  </Alert>
                                     }
                                 </div>
                             </div>
                         </form>
-                        <div className="w-[100%]">
+                        <div className="w-[100%] cursor-default select-none">
                             <div className="flex flex-row justify-between items-center w-[100%]">
                                 <div className="bg-[var(--platinum)] h-[4px] w-[26%] rounded-[5px]" />
                                 <span className="text-white">Already have an account?</span>
@@ -253,23 +252,25 @@ export default function Page() {
                     </div>
                 </div>
             </div>
-            <div className="flex flex-col justify-center mr-16 bg-[var(--eerie-black)] h-fit">
+            {/* <div className="flex flex-col justify-center mr-16 bg-[var(--black)] h-fit">
                 <div className="text-[var(--platinum)] text-4xl ">
                     <span className="bold">Calling All Adventurers: </span>
                     <span>
                         Whether you're a seasoned dungeon master or a curious newcomer, Random Encounter welcomes players of all levels to join our vibrant community of RPG enthusiasts.
                     </span>
                 </div>
+            </div> */}
+            <div className="left-0 self-end">
+                <ReCAPTCHA
+                    sitekey="6Lf6uEEnAAAAAAMfmsNLDVasUXmwpFFEMepRxbBi"
+                    size="invisible"
+                    onChange={() => setCaptchaVerified(true)}
+                    onExpired={() => setCaptchaVerified(false)}
+                    onError={() => setCaptchaVerified(false)}
+                    className="self-center hidden"
+                    theme="dark"
+                />
             </div>
-            <ReCAPTCHA
-                sitekey="6Lf6uEEnAAAAAAMfmsNLDVasUXmwpFFEMepRxbBi"
-                size="invisible"
-                onChange={() => setCaptchaVerified(true)}
-                onExpired={() => setCaptchaVerified(false)}
-                onError={() => setCaptchaVerified(false)}
-                className="self-center"
-                theme="dark"
-            />
         </main>
     );
 }

@@ -6,6 +6,7 @@ import { Button } from "./_components/Button";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import { AuthProvider } from "./contexts/AuthContext";
 
 const font = Roboto({
 	subsets: ["latin"],
@@ -39,7 +40,9 @@ export default function RootLayout({
 						</Link>
 					</div>
 				</nav>
-				{children}
+				<AuthProvider>
+					{children}
+				</AuthProvider>
 				<ToastContainer limit={2} />
 			</body>
 		</html>

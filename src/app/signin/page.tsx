@@ -1,17 +1,11 @@
 "use client";
-import React, { FormEvent, useEffect, useReducer, useState } from "react";
+import React, { FormEvent, useContext, useState } from "react";
 import { InputText } from "../_components/InputText";
-import { User } from "@/model/user/user.type";
 import { Button } from "../_components/Button";
-import { SelectItem, SelectMenu } from "../_components/SelectMenu";
-import addressRequest from "../_api/address.request";
-import capitalize from 'capitalize';
 import ReCAPTCHA from "react-google-recaptcha";
-import { RegExUtil } from "../_utils/regex.util";
-import authRequest from "../_api/auth.request";
-import { Alert } from "@mui/material";
-import { AxiosError } from "axios";
 import Link from "next/link";
+import { AuthContext } from "../contexts/AuthContext";
+import { useRouter } from 'next/navigation';
 
 
 export default function Page() {
@@ -19,26 +13,42 @@ export default function Page() {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
 
+    const [isLogged, setIsLogged] = useState<boolean>(false);
+
     const [captchaVerified, setCaptchaVerified] = useState<boolean>(false)
+
+    const { signIn } = useContext(AuthContext);
+    const Router = useRouter();
 
     const submitForm = async (event: FormEvent) => {
         event.preventDefault();
 
+        var logged = false;
+
+        if (email && password) {
+            logged = await signIn({ email, password });
+
+            setIsLogged(logged);
+            if (logged)
+                Router.push("/hub")
+        }
     }
 
     return (
-        <main className="bg-giant-dark bg-bottom p-[2.80rem] flex flex-row">
-            <div className="flexflex-row justify-end mr-16">
-                <div className="bg-tiamat-flipped bg-[-250px] w-[50vw] flex flex-row justify-start ">
-                    <div className="flex flex-col justify-center items-center w-[27vw] h-[80vh] p-10 glass flip">
+        <main className="bg-forest-flipped bg-left-center p-[2.8rem] flex flex-row justify-end items-center">
+            <div className="backdrop-brightness-[0.5] h-full w-full absolute left-0 right-0" />
+            <div className="flex flex-row justify-start ml-16 flip">
+                <div className="bg-adventurers-flipped bg-[-750px] w-[50vw] flex flex-row justify-start ">
+                    <div className="flex flex-col justify-evenly items-center w-[31.5rem] h-[80vh] p-10 glass flip ">
                         <form
                             className="flex flex-col gap-[2rem] w-[100%]"
                             onSubmit={(event) => {
                                 submitForm(event)
-                            }}>
+                            }}
+                            action="/hub">
                             <InputText
                                 value={email}
-                                placeholder="E-mail"
+                                title="E-mail"
                                 wClass="w-[100%]"
                                 onChange={(value: string) => {
                                     setEmail(value);
@@ -47,22 +57,41 @@ export default function Page() {
                             />
                             <InputText
                                 value={password}
-                                placeholder="Password"
+                                title="Password"
+                                type="password"
                                 wClass="w-[100%]"
                                 onChange={(value: string) => {
                                     setPassword(value);
                                 }}
                                 required
+                                showEye
                             />
                             <div className="flex flex-row justify-end">
-                                <Link href={"/signin"} className="text-[var(--light-purple-2)] hover:font-bold"> Forgot your password? </Link>
+                                <Link href={"/signin"} className="text-[var(--light-mint)] hover:font-bold"> Forgot your password? </Link>
                             </div>
                             <Button
                                 label="Sign in"
                                 type="submit"
-                                labelClassName="!text-[var(--eerie-black)]"
-                                className="w-[100%] justify-end bg-[var(--pumpkin-dark)] hover:bg-[var(--pumpkin)]" />
+                                labelClassName="!text-[var(--black)]"
+                                className="w-[100%] justify-end bg-[var(--dark-mint)] hover:bg-[var(--mint)]" />
                         </form>
+
+                        <div className="w-[100%] cursor-default select-none">
+                            <div className="flex flex-row justify-between items-center w-[100%]">
+                                <div className="bg-[var(--platinum)] h-[4px] w-[33%] rounded-[5px]" />
+                                <span className="text-white">First adventure?</span>
+                                <div className="bg-[var(--platinum)] h-[4px] w-[33%] rounded-[5px]" />
+                            </div>
+
+                            <Link href="/signup" >
+                                <Button
+                                    label="Sign up"
+                                    type="button"
+                                    labelClassName=""
+                                    className="w-[100%] justify-end mt-4" />
+                            </Link>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -72,7 +101,7 @@ export default function Page() {
                 onChange={() => setCaptchaVerified(true)}
                 onExpired={() => setCaptchaVerified(false)}
                 onError={() => setCaptchaVerified(false)}
-                className="self-center"
+                className="self-center hidden"
                 theme="dark"
             />
         </main>

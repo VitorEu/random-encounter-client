@@ -1,7 +1,7 @@
 import { JSX, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { InputText } from "./InputText";
-import { FaMagnifyingGlass } from 'react-icons/fa6'
+import { FaCaretDown, FaMagnifyingGlass, FaSquareCaretDown } from 'react-icons/fa6'
 
 export interface SelectItem {
     id: string,
@@ -56,7 +56,7 @@ const SelectMenu = ({
         workList.forEach((item: SelectItem) => {
             propList.push(
                 <button type="button"
-                    className="hover:bg-[var(--pumpkin-dark-2)] p-2 cursor-pointer text-left text-[var(--platinum)] rounded-lg ml-7"
+                    className="hover:bg-[var(--gray)] p-2 cursor-pointer text-left text-[var(--platinum)] rounded-lg ml-7"
                     onClick={async (data) => {
                         setItemSelect(item.value);
                         setRenderDropdown(false);
@@ -79,25 +79,30 @@ const SelectMenu = ({
                 <span>
                     {title}
                     {required &&
-                        <span className="text-[var(--pumpkin)]"> *</span>}
+                        <span className="text-[var(--mint)]"> *</span>}
                 </span>
             </label>
-            <input
-                className={`static h-8 p-1 bg-black bg-opacity-0 outline-none border-b-2 rounded-s transition text-[var(--platinum)] focus:border-[var(--pumpkin)] focus:bg-opacity-10`}
-                id={title}
-                required={required}
-                value={itemSelect}
-                disabled={disabled}
-                onFocus={() => setRenderDropdown(true)}
-                onChange={({ target }) => {
-                    onChange && onChange(target.value);
-                    setItemSelect(target.value)
-                }}
-                readOnly
-            />
+            <div className="flex flex-row justify-items-start">
+                <input
+                    className={`static h-8 p-1 bg-black bg-opacity-0 outline-none border-b-2 rounded-s transition text-[var(--platinum)] focus:border-[var(--mint)] focus:bg-opacity-10 w-[100%]`}
+                    id={title}
+                    required={required}
+                    value={itemSelect}
+                    disabled={disabled}
+                    onFocus={() => setRenderDropdown(true)}
+                    onChange={({ target }) => {
+                        onChange && onChange(target.value);
+                        setItemSelect(target.value)
+                    }}
+                    readOnly
+                />
+                <FaCaretDown
+                    className="absolute items-end right-12 mt-2"
+                    color="var(--platinum)" />
+            </div>
             {renderDropdown &&
                 <div
-                    className={`absolute z-50 bg-[var(--eerie-black)] p-3 flex flex-col justify-start w-[84.2%] h-[${workList.length * 8}px] max-h-[20rem] overflow-y-scroll no-scrollbar rounded-b-xl translate-y-[3.5rem]`}>
+                    className={`absolute z-50 bg-[var(--black)] p-3 flex flex-col justify-start w-[84.2%] h-[${workList.length * 8}px] max-h-[20rem] overflow-y-scroll no-scrollbar rounded-b-xl translate-y-[3.5rem]`}>
 
                     {search &&
                         <InputText

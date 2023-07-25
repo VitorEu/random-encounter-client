@@ -1,7 +1,8 @@
 'use client'
-import { v4 } from "uuid";
-import { Component, HTMLInputTypeAttribute, ReactNode, useState } from "react";
+import { v4 as uuid } from "uuid";
+import { Component, HTMLInputTypeAttribute, ReactNode, useEffect, useState } from "react";
 import { IconType } from "react-icons";
+import { FaCaretDown, FaEye, FaEyeSlash } from "react-icons/fa6";
 
 export interface InputTextProps {
     title?: string;
@@ -13,6 +14,7 @@ export interface InputTextProps {
     wClass?: string;
     type?: HTMLInputTypeAttribute;
     required?: boolean;
+    showEye?: boolean;
 }
 
 function InputText({
@@ -25,18 +27,19 @@ function InputText({
     placeholder,
     wClass = "w-72",
     required = false,
+    showEye = false,
 }: InputTextProps): JSX.Element {
-    const uuid = v4();
 
     const [textValue, setTextValue] = useState(value);
+    const [stateType, setStateType] = useState(type);
 
     return (
         <div className="flex flex-col" id="input-container">
-            <label htmlFor={title} className="text-[var(--platinum)] ml-1">
-                <span>
+            <label htmlFor={title} className={`text-[var(--platinum)] ml-1 select-none`}>
+                <span className="">
                     {title}
                     {required && title &&
-                        <span className="text-[var(--pumpkin)]"> *</span>}
+                        <span className="text-[var(--mint)]"> *</span>}
                 </span>
             </label>
             <div className="flex flex-row">
@@ -46,18 +49,38 @@ function InputText({
                     </span>
                 }
                 <input
-                    placeholder={placeholder}
-                    className={`h-8 ${wClass} p-1 bg-black bg-opacity-0 outline-none border-b-2 rounded-s transition text-[var(--platinum)] focus:border-[var(--pumpkin)] focus:bg-opacity-10`}
+                    className={`h-8 ${wClass} p-1 bg-black bg-opacity-0 outline-none border-b-2 rounded-s transition text-[var(--platinum)] focus:border-[var(--mint)] focus:bg-opacity-10`}
                     id={title}
-                    type={type}
+                    type={stateType}
                     required={required}
-                    value={textValue}
+                    value={textValue || ''}
                     onBlur={() => onBlur && onBlur()}
                     onChange={({ target }) => {
                         setTextValue(target.value);
                         onChange(target.value);
                     }}
                 />
+                {showEye ?
+                    <div>
+                        {stateType === 'password' ?
+                            <FaEye
+                                color="var(--platinum)"
+                                className="cursor-pointer absolute items-end right-12 mt-1 select-none"
+                                size={21}
+                                onClick={() => setStateType('text')}
+                            />
+                            :
+                            <FaEyeSlash
+                                color="var(--platinum)"
+                                className="cursor-pointer absolute items-end right-12 mt-[2.2px] select-none mr-[-0.5px]"
+                                size={23}
+                                onClick={() => setStateType('password')}
+                            />
+                        }
+                    </div>
+                    :
+                    <></>
+                }
             </div>
         </div>
     );
