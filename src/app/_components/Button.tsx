@@ -1,4 +1,4 @@
-import { ElementType } from "react";
+import { ComponentProps } from "react";
 
 export interface ButtonProps {
     label?: string;

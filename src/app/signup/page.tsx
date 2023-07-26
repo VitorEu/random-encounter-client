@@ -223,7 +223,6 @@ export default function Page() {
                                     label="Sign up"
                                     type="submit"
                                     onClick={validateFields}
-                                    labelClassName="!text-[var(--black)]"
                                     className="w-[100%] justify-end bg-[var(--dark-mint)] hover:bg-[var(--mint)] mt-4" />
 
                                 <div className="text-[var(--mint)] text-sm flex flex-col gap-2">

@@ -79,7 +79,7 @@ const SelectMenu = ({
                 <span>
                     {title}
                     {required &&
-                        <span className="text-[var(--mint)]"> *</span>}
+                        <span className="text-[orange]"> *</span>}
                 </span>
             </label>
             <div className="flex flex-row justify-items-start">

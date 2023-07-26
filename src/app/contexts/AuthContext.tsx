@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { error } from "../_utils/toast.config";
 import { UserDTO } from "../_api/dtos/user.dto";
 import userRequest from "../_api/user.requests";
+import { api } from "../_api/base.api";
 
 
 interface AuthProps {
@@ -45,32 +46,36 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
         const { 're.token': token } = parseCookies();
         const payload: any = decode(token);
 
-        setUserData({
-            id: payload.sub,
-            email: payload.email,
-            authorized: payload.authorized
-        })
+        if (token) {
+            setUserData({
+                id: payload.sub,
+                email: payload.email,
+                authorized: payload.authorized
+            })
 
-
+            fillCompleteUserData(payload.sub);
+        }
     }, [])
 
     const signIn = async ({ email, password }: LoginBody): Promise<boolean> => {
 
         const { data, status } = await authRequest.signIn({ email, password });
-        const { token } = data
+        const { token } = data;
 
         if (status === 201) {
             const payload: any = decode(token);
 
             setCookie(undefined, 're.token', token, {
                 maxAge: 60 * 60 * 24 * 10 // 10 days
-            })
+            });
 
             setUserData({
                 id: payload.sub,
                 email: payload.email,
                 authorized: payload.authorized
-            })
+            });
+
+            api.defaults.headers['Authorization'] = `Bearer ${token}`;
 
             return true;
         } else {

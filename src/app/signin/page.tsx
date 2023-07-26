@@ -72,7 +72,6 @@ export default function Page() {
                             <Button
                                 label="Sign in"
                                 type="submit"
-                                labelClassName="!text-[var(--black)]"
                                 className="w-[100%] justify-end bg-[var(--dark-mint)] hover:bg-[var(--mint)]" />
                         </form>
 
