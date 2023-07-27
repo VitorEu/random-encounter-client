@@ -14,6 +14,7 @@ interface UserDTO {
 	role: Role;
 	authorized?: boolean;
 	addressId?: string;
+    colorHex: string;
 }
 
 interface CompleteUserDTO {

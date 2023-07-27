@@ -11,23 +11,3 @@ export default function Page() {
         </main>
     );
 }
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const apiClient = getAPIClient(ctx);
-    const { 're.token': token } = parseCookies(ctx);
-
-    await apiClient.get('/address/city');
-
-    if (!token) {
-        return {
-            redirect: {
-                destination: "/",
-                permanent: false,
-            },
-        };
-    }
-
-    return {
-        props: {},
-    };
-}

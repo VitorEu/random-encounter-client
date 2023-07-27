@@ -10,7 +10,7 @@ export interface UserRequest {
 
 const getUser = async (userId: string): Promise<UserDTO | undefined> => {
     if (userId) {
-        const userData: UserDTO = (await api.get(`/auth/user?query=${userId}`)).data;
+        const userData: UserDTO = (await api.get(`/auth/user?query=${userId}`)).data[0];
         if (userData) {
             return userData;
         } else {

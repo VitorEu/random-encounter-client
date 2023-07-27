@@ -1,12 +1,17 @@
 import Link from "next/link"
 import { Button } from "./Button"
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../contexts/AuthContext"
+import { Avatar } from "@mui/material"
+import { FaRightFromBracket } from "react-icons/fa6"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 
 export const HeaderNavigator = () => {
 
-    const { userData, isAuthenticated } = useContext(AuthContext);
+    const { completeUserData: user, isAuthenticated, signOut } = useContext(AuthContext);
+
+    const [openUserOptions, setOpenUserOptions] = useState<boolean>(false);
 
     return (
         <nav className="navbar py-5 px-12 flex flex-row justify-between items-center">
@@ -15,9 +20,33 @@ export const HeaderNavigator = () => {
                     Random Encounter
                 </Link>
             </div>
-            {isAuthenticated ?
-                <div>
-
+            {isAuthenticated && user ?
+                <div onMouseLeave={() => setOpenUserOptions(false)} tabIndex={0}>
+                    <div className="cursor-pointer hover:brightness-125 transition"
+                        onClick={() => setOpenUserOptions(!openUserOptions)}>
+                        <Avatar
+                            sx={{ bgcolor: user.colorHex }}>
+                            {user.name[0]}
+                        </Avatar>
+                    </div>
+                    {openUserOptions &&
+                        <div className=" w-[12rem] bg-[var(--black)] absolute -translate-x-3/4 p-4 rounded-lg flex flex-col gap-4 bold">
+                            <div className="w-[100%]">
+                                <Button
+                                    className="w-[100%] border-transparent backdrop-brightness-90"
+                                    label="Profile"
+                                />
+                            </div>
+                            <div className="w-[100%]">
+                                <Button
+                                    className="w-[100%] !border-[orangered]"
+                                    icon={<FaRightFromBracket />}
+                                    label="Logout"
+                                    onClick={async () => await signOut()}
+                                />
+                            </div>
+                        </div>
+                    }
                 </div>
                 :
                 <div>

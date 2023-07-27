@@ -1,10 +1,10 @@
-"use client"
+'use client'
 import { LoginBody } from "@/model/user/user.type";
 import { FC, createContext, useEffect, useState } from "react";
 import authRequest from "../_api/auth.request";
 import { Secret, decode, verify } from 'jsonwebtoken';
 import { setCookie, parseCookies } from "nookies";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { error } from "../_utils/toast.config";
 import { UserDTO } from "../_api/dtos/user.dto";
@@ -19,7 +19,9 @@ interface AuthProps {
 interface AuthContextData {
     isAuthenticated: boolean;
     userData: UserGenData | null;
+    completeUserData: UserDTO | undefined;
     signIn: (loginBody: LoginBody) => Promise<boolean>;
+    signOut: () => Promise<void>;
 }
 
 interface UserGenData {
@@ -34,13 +36,15 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
 
     const [userData, setUserData] = useState<UserGenData | null>(null);
 
-    const [completeUserData, setCompleteUserData] = useState<UserDTO>()
+    const [completeUserData, setCompleteUserData] = useState<UserDTO | undefined>()
 
     const isAuthenticated = !!userData
 
     const fillCompleteUserData = async (userId: string) => {
         setCompleteUserData(await userRequest.getUser(userId));
     }
+
+    const Router = useRouter();
 
     useEffect(() => {
         const { 're.token': token } = parseCookies();
@@ -56,6 +60,18 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
             fillCompleteUserData(payload.sub);
         }
     }, [])
+
+    const signOut = async () => {
+        setUserData(null);
+        setCompleteUserData(undefined);
+        setCookie(null, "re.token", "", {
+            path: "/",
+            maxAge: -1
+        })
+
+        api.defaults.headers["Authorization"] = "";
+        Router.push("/")
+    }
 
     const signIn = async ({ email, password }: LoginBody): Promise<boolean> => {
 
@@ -93,7 +109,7 @@ export const AuthProvider: FC<AuthProps> = ({ children }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signIn, userData }}>
+        <AuthContext.Provider value={{ isAuthenticated, signIn, signOut, userData, completeUserData }}>
             {children}
         </AuthContext.Provider>
     )

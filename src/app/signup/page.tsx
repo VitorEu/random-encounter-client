@@ -200,6 +200,7 @@ export default function Page() {
                                         value={newUser.password}
                                         title="Password"
                                         type="password"
+                                        showEye
                                         wClass="w-[100%]"
                                         onChange={(value: string) => {
                                             newUser.password = value;
@@ -212,6 +213,7 @@ export default function Page() {
                                         value={confirmPass}
                                         title="Confirm Password"
                                         type="password"
+                                        showEye
                                         wClass="w-[100%]"
                                         onChange={(value: string) => {
                                             setConfirmPass(value);

@@ -64,6 +64,7 @@ function InputText({
                     <div>
                         {stateType === 'password' ?
                             <FaEye
+                                id={uuid()}
                                 color="var(--platinum)"
                                 className="cursor-pointer absolute items-end right-12 mt-1 select-none"
                                 size={21}
@@ -71,6 +72,7 @@ function InputText({
                             />
                             :
                             <FaEyeSlash
+                                id={uuid()}
                                 color="var(--platinum)"
                                 className="cursor-pointer absolute items-end right-12 mt-[2.2px] select-none mr-[-0.5px]"
                                 size={23}
