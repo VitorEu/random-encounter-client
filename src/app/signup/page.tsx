@@ -11,8 +11,9 @@ import { RegExUtil } from "../_utils/regex.util";
 import authRequest from "../_api/auth.request";
 import { Alert } from "@mui/material";
 import { AxiosError } from "axios";
-import { error, toastConfig } from "../_utils/toast.config";
+import { error, success, toastConfig } from "../_utils/toast";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 
 export default function Page() {
@@ -22,8 +23,8 @@ export default function Page() {
     const [stateList, setStateList] = useState<SelectItem[]>([]);
     const [cityList, setCityList] = useState<SelectItem[]>([]);
 
-    const [renderPassMismatch, setRenderPassMismatch] = useState<boolean>(false)
-    const [renderWeakPass, setRenderWeakPass] = useState<boolean | undefined>(false)
+    const [passMismatch, setPassMismatch] = useState<boolean>(false)
+    const [weakPass, setWeakPass] = useState<boolean | undefined>(false)
     const [duplicateEmail, setDuplicateEmail] = useState<boolean | undefined>(false)
     const [confirmPass, setConfirmPass] = useState<string | undefined>()
     const [captchaVerified, setCaptchaVerified] = useState<boolean>(false)
@@ -34,9 +35,11 @@ export default function Page() {
         getCountry()
     }, [])
 
+    const Router = useRouter();
+
     const submitForm = async (event: FormEvent) => {
         event.preventDefault();
-        if (!renderPassMismatch && !renderWeakPass) {
+        if (!passMismatch && !weakPass) {
             const userBody: UserBody = {
                 user: {
                     name: `${newUser.firstName} ${newUser.lastName}`,
@@ -54,9 +57,19 @@ export default function Page() {
 
             try {
                 var response = await authRequest.registerUser(userBody);
+                if (response?.status == 201) {
+                    success("Account created successfully!")
+                    Router.push("/signin")
+                }
             } catch (ex: AxiosError | any) {
-                if (ex?.response.status == 409) {
-                    error("Email already in use");
+                switch (ex?.response.status) {
+                    case 409:
+                        error("Email already in use");
+                        break;
+                    default:
+                        console.log(ex?.response.data.message[0])
+                        error(ex?.response.data?.message[0]?.replace('user.', ''))
+                        break;
                 }
             }
         }
@@ -70,14 +83,14 @@ export default function Page() {
     const passMatch = (confirmPass: string) => {
         if (confirmPass && (confirmPass !== newUser.password)) {
             error('Password does not match')
-            setRenderPassMismatch(true);
+            setPassMismatch(true);
         }
     }
 
     const passStrongness = (pass: string) => {
         if (pass && !RegExUtil.password.test(pass)) {
             error("Password must have: atleast 8 characters long, lower and upper case letters, a number and a special symbol [_#?!@$%^&*-].");
-            setRenderWeakPass(true)
+            setWeakPass(true)
         }
     }
 

@@ -1,5 +1,5 @@
 "use client";
-import React, { FormEvent, useContext, useState } from "react";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
 import { InputText } from "../_components/InputText";
 import { Button } from "../_components/Button";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -17,8 +17,14 @@ export default function Page() {
 
     const [captchaVerified, setCaptchaVerified] = useState<boolean>(false)
 
-    const { signIn } = useContext(AuthContext);
+    const { signIn, isAuthenticated } = useContext(AuthContext);
     const Router = useRouter();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            Router.replace("/hub")
+        }
+    })
 
     const submitForm = async (event: FormEvent) => {
         event.preventDefault();
@@ -29,8 +35,9 @@ export default function Page() {
             logged = await signIn({ email, password });
 
             setIsLogged(logged);
-            if (logged)
-                Router.push("/hub")
+            if (logged) {
+                Router.replace("/hub")
+            }
         }
     }
 

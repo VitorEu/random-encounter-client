@@ -8,7 +8,7 @@
 	--light-mint: #98eecc;
 	--mint: #7eca9c;
 	--dark-mint: #5faa7d;
-	--dark-green: #0c191a;
+	--dark-green: #000f0e;
 	--black: #1c1427;
 	--gray: #40394a;
 
@@ -25,15 +25,13 @@ input:-webkit-autofill:active {
 
 @layer utilities {
 	@variants responsive {
-		/* Hide scrollbar for Chrome, Safari and Opera */
 		.no-scrollbar::-webkit-scrollbar {
 			display: none;
 		}
 
-		/* Hide scrollbar for IE, Edge and Firefox */
 		.no-scrollbar {
-			-ms-overflow-style: none; /* IE and Edge */
-			scrollbar-width: none; /* Firefox */
+			-ms-overflow-style: none;
+			scrollbar-width: none;
 		}
 	}
 }
@@ -147,11 +145,6 @@ option {
 
 .bold {
 	font-weight: bold;
-}
-
-.navbar {
-	background: var(--dark-green);
-	border-bottom: 2px solid var(--mint);
 }
 
 .title {

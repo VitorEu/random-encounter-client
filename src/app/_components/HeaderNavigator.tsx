@@ -14,7 +14,7 @@ export const HeaderNavigator = () => {
     const [openUserOptions, setOpenUserOptions] = useState<boolean>(false);
 
     return (
-        <nav className="navbar py-5 px-12 flex flex-row justify-between items-center">
+        <nav className="bg-[var(--dark-green)] border-b-[var(--mint)] border-b-2 py-5 px-12 flex flex-row justify-between items-center">
             <div className="w-1">
                 <Link href="/" className="title bold leading-6">
                     Random Encounter

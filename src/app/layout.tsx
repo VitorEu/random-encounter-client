@@ -24,14 +24,14 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en">
-			<body className={font.className}>
-				<AuthProvider>
+		<AuthProvider>
+			<html lang="en">
+				<body className={font.className}>
 					<HeaderNavigator />
 					{children}
 					<ToastContainer limit={2} />
-				</AuthProvider>
-			</body>
-		</html>
+				</body>
+			</html>
+		</AuthProvider>
 	);
 }

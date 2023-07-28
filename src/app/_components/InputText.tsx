@@ -61,12 +61,12 @@ function InputText({
                     }}
                 />
                 {showEye ?
-                    <div>
+                    <div className="flex flex-row justify-end">
                         {stateType === 'password' ?
                             <FaEye
                                 id={uuid()}
                                 color="var(--platinum)"
-                                className="cursor-pointer absolute items-end right-12 mt-1 select-none"
+                                className="cursor-pointer absolute mt-1 mr-1 select-none"
                                 size={21}
                                 onClick={() => setStateType('text')}
                             />
@@ -74,7 +74,7 @@ function InputText({
                             <FaEyeSlash
                                 id={uuid()}
                                 color="var(--platinum)"
-                                className="cursor-pointer absolute items-end right-12 mt-[2.2px] select-none mr-[-0.5px]"
+                                className="cursor-pointer absolute mt-[2.2px] select-none mr-1"
                                 size={23}
                                 onClick={() => setStateType('password')}
                             />

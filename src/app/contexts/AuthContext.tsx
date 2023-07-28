@@ -6,7 +6,7 @@ import { Secret, decode, verify } from 'jsonwebtoken';
 import { setCookie, parseCookies } from "nookies";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
-import { error } from "../_utils/toast.config";
+import { error } from "../_utils/toast";
 import { UserDTO } from "../_api/dtos/user.dto";
 import userRequest from "../_api/user.requests";
 import { api } from "../_api/base.api";
