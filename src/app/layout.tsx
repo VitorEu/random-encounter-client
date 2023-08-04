@@ -2,12 +2,13 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
-import { Button } from "./_components/Button";
-import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
-import { AuthProvider } from "./contexts/AuthContext";
-import { HeaderNavigator } from "./_components/HeaderNavigator";
+import { AuthProvider } from "../contexts/AuthContext";
+import { HeaderNavigator } from "@/components/HeaderNavigator";
+import { usePathname } from "next/navigation";
+import { isPublicRoute, isRestrictRoute } from "@/utils/route.util";
+import { TableProvider } from "@/contexts/TableContext";
 
 const font = Roboto({
 	subsets: ["latin"],
@@ -23,15 +24,31 @@ export default function RootLayout({
 }: {
 	children: React.ReactNode;
 }) {
+
+	const pathName = usePathname();
+
+	const isPublic = isPublicRoute(pathName);
+
 	return (
-		<AuthProvider>
-			<html lang="en">
-				<body className={font.className}>
-					<HeaderNavigator />
-					{children}
-					<ToastContainer limit={2} />
-				</body>
-			</html>
-		</AuthProvider>
+		<html lang="en">
+			<title>Random Encounter</title>
+			<body className={font.className}>
+				<ToastContainer limit={2} />
+				{!isPublic &&
+					<AuthProvider>
+						<TableProvider>
+							<HeaderNavigator />
+							{children}
+						</TableProvider>
+					</AuthProvider>
+				}
+				{isPublic &&
+					<>
+						<HeaderNavigator />
+						{children}
+					</>
+				}
+			</body>
+		</html>
 	);
 }

@@ -1,11 +1,13 @@
 "use client";
 import React, { FormEvent, useContext, useEffect, useState } from "react";
-import { InputText } from "../_components/InputText";
-import { Button } from "../_components/Button";
+import { InputText } from "../../components/InputText";
+import { Button } from "../../components/Button";
 import ReCAPTCHA from "react-google-recaptcha";
 import Link from "next/link";
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext";
 import { useRouter } from 'next/navigation';
+import { signIn } from "@/utils/auth.util";
+import { AUTH_TOKEN } from "@/constants/app.auth";
 
 
 export default function Page() {
@@ -17,12 +19,14 @@ export default function Page() {
 
     const [captchaVerified, setCaptchaVerified] = useState<boolean>(false)
 
-    const { signIn, isAuthenticated } = useContext(AuthContext);
     const Router = useRouter();
 
     useEffect(() => {
-        if (isAuthenticated) {
-            Router.replace("/hub")
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem(AUTH_TOKEN)) {
+                setIsLogged(true)
+                Router.push('/hub');
+            }
         }
     })
 
@@ -36,17 +40,17 @@ export default function Page() {
 
             setIsLogged(logged);
             if (logged) {
-                Router.replace("/hub")
+                Router.push("/hub")
             }
         }
     }
 
     return (
-        <main className="bg-forest-flipped bg-left-center p-[2.8rem] flex flex-row justify-end items-center">
+        <main className="bg-forest-flipped bg-left-center p-[2.8rem] flex flex-row md:justify-end sm:justify-center items-center ">
             <div className="backdrop-brightness-[0.5] h-full w-full absolute left-0 right-0" />
-            <div className="flex flex-row justify-start ml-16 flip">
-                <div className="bg-adventurers-flipped bg-[-750px] w-[50vw] flex flex-row justify-start ">
-                    <div className="flex flex-col justify-evenly items-center w-[31.5rem] h-[80vh] p-10 glass flip ">
+            <div className="flex flex-row justify-start md:ml-16 flip">
+                <div className="bg-adventurers-flipped bg-[-750px] md:w-[50vw] flex flex-row md:justify-start sm:justify-center ">
+                    <div className="flex flex-col justify-evenly items-center lg:w-[31.5rem] md:w-[40rem] sm:rounded-l-[10px] h-[80vh] p-10 glass flip  ">
                         <form
                             className="flex flex-col gap-[2rem] w-[100%]"
                             onSubmit={(event) => {
@@ -112,4 +116,5 @@ export default function Page() {
             />
         </main>
     );
+
 }

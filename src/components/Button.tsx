@@ -25,7 +25,7 @@ const Button = ({
 }: ButtonProps) => {
     return (
         <button
-            className={`border-[var(--mint)] border-2 p-1.5 px-3 rounded-md disabled:opacity-30 disabled:border-gray-500 ${!disabled && 'hover:bg-[var(--gray)]'} ${className}`}
+            className={`border-[var(--mint)] border-2 p-1.5 px-3 rounded-md disabled:opacity-30 disabled:border-gray-500 ${!disabled && 'hover:bg-[var(--gray)]'} ${className} transition`}
             onClick={onClick}
             type={type}
             disabled={disabled}>

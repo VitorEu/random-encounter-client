@@ -1,19 +1,20 @@
 "use client";
 import React, { FormEvent, useEffect, useState } from "react";
-import { InputText } from "../_components/InputText";
+import { InputText } from "../../components/InputText";
 import { User, UserBody } from "@/model/user/user.type";
-import { Button } from "../_components/Button";
-import { SelectItem, SelectMenu } from "../_components/SelectMenu";
-import addressRequest from "../_api/address.request";
+import { Button } from "../../components/Button";
+import { SelectItem, SelectMenu } from "../../components/SelectMenu";
+import addressRequest from "../../api/address.request";
 import capitalize from 'capitalize';
 import ReCAPTCHA from "react-google-recaptcha";
-import { RegExUtil } from "../_utils/regex.util";
-import authRequest from "../_api/auth.request";
+import { RegExUtil } from "../../utils/regex.util";
+import authRequest from "../../api/auth.request";
 import { Alert } from "@mui/material";
 import { AxiosError } from "axios";
-import { error, success, toastConfig } from "../_utils/toast";
+import { error, success, toastConfig } from "../../utils/toast";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AUTH_TOKEN } from "@/constants/app.auth";
 
 
 export default function Page() {
@@ -32,6 +33,13 @@ export default function Page() {
     const [enableCitySelection, setEnableCitySelection] = useState<boolean>(false);
 
     useEffect(() => {
+        if (typeof window !== 'undefined') {
+            if (localStorage.getItem(AUTH_TOKEN)) {
+                Router.push('/hub');
+                return;
+            }
+        }
+
         getCountry()
     }, [])
 
