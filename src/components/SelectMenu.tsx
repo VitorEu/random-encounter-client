@@ -38,10 +38,6 @@ const SelectMenu = ({
 
     const [renderDropdown, setRenderDropdown] = useState<boolean>(false);
 
-    // useEffect(() => {
-    //     selectItems();
-    // }, [items, itemSelect])
-
     const filterItems = (value: string) => {
         const filteredList: SelectItem[] = items.filter(item => {
             return item.value.toLowerCase().includes(value.toLowerCase());
@@ -51,25 +47,29 @@ const SelectMenu = ({
     }
 
     const selectItems = () => {
-        let propList: JSX.Element[] = [];
-        if (!workList.length) setWorkList(items)
-        workList.forEach((item: SelectItem) => {
-            propList.push(
-                <button type="button"
-                    className="hover:bg-[var(--gray)] p-2 cursor-pointer text-left text-[var(--platinum)] rounded-lg ml-7"
-                    onClick={async (data) => {
-                        setItemSelect(item.value);
-                        setRenderDropdown(false);
-                        onSelect(item.id);
-                        setWorkList(items);
-                    }}
-                    key={item.id}>
-                    {item.value}
-                </button>
+        let propListElement: JSX.Element[] = [];
+        const populate = async () => {
+            await Promise.all(
+                workList.map((item: SelectItem) => {
+                    propListElement.push(
+                        <button type="button"
+                            className="hover:bg-[var(--gray)] p-2 cursor-pointer text-left text-[var(--platinum)] rounded-lg ml-7"
+                            onClick={(data) => {
+                                setItemSelect(item.value);
+                                setRenderDropdown(false);
+                                onSelect(item.id);
+                                setWorkList(items);
+                            }}
+                            key={item.id}>
+                            {item.value}
+                        </button>
+                    )
+                })
             )
-        })
+        }
+        populate();
 
-        return propList;
+        return propListElement;
     }
 
     return (
@@ -89,10 +89,12 @@ const SelectMenu = ({
                     required={required}
                     value={itemSelect}
                     disabled={disabled}
-                    onFocus={() => setRenderDropdown(true)}
+                    onFocus={() => {
+                        setWorkList(items)
+                        setRenderDropdown(true)
+                    }}
                     onChange={({ target }) => {
                         onChange && onChange(target.value);
-                        setItemSelect(target.value)
                     }}
                     readOnly
                 />

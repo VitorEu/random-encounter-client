@@ -24,6 +24,10 @@ export default function Page() {
     const [stateList, setStateList] = useState<SelectItem[]>([]);
     const [cityList, setCityList] = useState<SelectItem[]>([]);
 
+    const [country, setCountry] = useState<string>('')
+    const [province, setProvince] = useState<string>('')
+    const [city, setCity] = useState<string>('')
+
     const [passMismatch, setPassMismatch] = useState<boolean>(false)
     const [weakPass, setWeakPass] = useState<boolean | undefined>(false)
     const [duplicateEmail, setDuplicateEmail] = useState<boolean | undefined>(false)
@@ -47,7 +51,9 @@ export default function Page() {
 
     const submitForm = async (event: FormEvent) => {
         event.preventDefault();
+        validateFields();
         if (!passMismatch && !weakPass) {
+            console.log('abacaxi')
             const userBody: UserBody = {
                 user: {
                     name: `${newUser.firstName} ${newUser.lastName}`,
@@ -62,7 +68,7 @@ export default function Page() {
                     countryId: newUser.country
                 }
             }
-
+            console.log(userBody)
             try {
                 var response = await authRequest.registerUser(userBody);
                 if (response?.status == 201) {
@@ -85,7 +91,9 @@ export default function Page() {
 
     const validateFields = () => {
         newUser.password && passStrongness(newUser.password)
+        console.log("🚀 ~ file: page.tsx:94 ~ validateFields ~ newUser.password && passStrongness(newUser.password):", newUser.password && passStrongness(newUser.password))
         confirmPass && passMatch(confirmPass);
+        console.log("🚀 ~ file: page.tsx:96 ~ validateFields ~ confirmPass && passMatch(confirmPass);:", confirmPass && passMatch(confirmPass))
     }
 
     const passMatch = (confirmPass: string) => {
@@ -177,7 +185,7 @@ export default function Page() {
                                 <SelectMenu
                                     items={countryList}
                                     placeholder="Country"
-                                    value={newUser.country}
+                                    value={country}
                                     title="Country"
                                     onSelect={(value: string) => {
                                         newUser.country = value;
@@ -192,7 +200,7 @@ export default function Page() {
                                     items={stateList}
                                     placeholder="State/Province"
                                     disabled={!enableStateSelection}
-                                    value={newUser.state}
+                                    value={province}
                                     title="State or Province"
                                     onSelect={(value: string) => {
                                         newUser.state = value;
@@ -207,7 +215,7 @@ export default function Page() {
                                     items={cityList}
                                     placeholder="City"
                                     disabled={!enableCitySelection}
-                                    value={newUser.city}
+                                    value={city}
                                     title="City"
                                     onSelect={(value: string) => {
                                         newUser.city = value;
@@ -245,7 +253,6 @@ export default function Page() {
                                 <Button
                                     label="Sign up"
                                     type="submit"
-                                    onClick={validateFields}
                                     className="w-[100%] justify-end bg-[var(--dark-mint)] hover:bg-[var(--mint)] mt-4" />
 
                                 <div className="text-[var(--mint)] text-sm flex flex-col gap-2">

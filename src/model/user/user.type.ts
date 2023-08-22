@@ -1,4 +1,4 @@
-interface  User {
+export interface  User {
   firstName: string;
   lastName: string;
   email: string;
@@ -8,7 +8,7 @@ interface  User {
   password: string;
 }
 
-interface UserBody {
+export interface UserBody {
   user: {
     name: string;
     email: string;
@@ -23,13 +23,8 @@ interface UserBody {
   }
 }
 
-interface LoginBody {
+export interface LoginBody {
   email: string;
   password: string;
 }
 
-export type { 
-  User, 
-  UserBody, 
-  LoginBody 
-};

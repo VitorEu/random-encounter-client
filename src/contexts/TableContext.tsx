@@ -28,6 +28,7 @@ export const TableProvider: FC<TableProps> = ({ children }) => {
                 setOwnedTableList(response);
             }
         } catch (ex: any) {
+            console.log(ex)
             error("An error occurred when trying to retrieve your tables");
         }
     }

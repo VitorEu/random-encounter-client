@@ -28,7 +28,7 @@ export const HeaderNavigator = () => {
                         onClick={() => setOpenUserOptions(!openUserOptions)}>
                         <Avatar
                             sx={{ bgcolor: user.colorHex }}>
-                            {user.name[0]}
+                            {user.name && user.name[0]}
                         </Avatar>
                     </div>
                     {openUserOptions &&
