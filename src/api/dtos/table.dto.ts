@@ -7,6 +7,7 @@ interface TableDTO {
     description: string;
     ownerId: string;
     systemId: string;
+    imageUrl: string;
 }
 
 interface CompleteTableDTO {

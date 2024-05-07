@@ -52,7 +52,8 @@ export default function Page() {
     const submitForm = async (event: FormEvent) => {
         event.preventDefault();
         validateFields();
-        if (!passMismatch && !weakPass) {
+        if (true) {
+        // if (!passMismatch && !weakPass) {
             console.log('abacaxi')
             const userBody: UserBody = {
                 user: {
@@ -94,6 +95,9 @@ export default function Page() {
         console.log("🚀 ~ file: page.tsx:94 ~ validateFields ~ newUser.password && passStrongness(newUser.password):", newUser.password && passStrongness(newUser.password))
         confirmPass && passMatch(confirmPass);
         console.log("🚀 ~ file: page.tsx:96 ~ validateFields ~ confirmPass && passMatch(confirmPass);:", confirmPass && passMatch(confirmPass))
+
+        setWeakPass(false);
+        setPassMismatch(false);
     }
 
     const passMatch = (confirmPass: string) => {

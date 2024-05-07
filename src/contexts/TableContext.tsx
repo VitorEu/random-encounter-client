@@ -24,11 +24,15 @@ export const TableProvider: FC<TableProps> = ({ children }) => {
     const fillOwnedTableList = async () => {
         try {
             if (userData) {
-                const response = await tableRequest.getOwnedTables(userData.id);
-                setOwnedTableList(response);
+                const tablesResponse: CompleteTableDTO[] = await tableRequest.getOwnedTables(userData.id);
+
+                tablesResponse.sort(({ table: tableA }: CompleteTableDTO, { table: tableB }: CompleteTableDTO) => {
+                    return new Date(tableA.createdAt).getTime() - new Date(tableB.createdAt).getTime()
+                });
+                
+                setOwnedTableList(tablesResponse);
             }
         } catch (ex: any) {
-            console.log(ex)
             error("An error occurred when trying to retrieve your tables");
         }
     }

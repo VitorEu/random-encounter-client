@@ -16,7 +16,7 @@ export const HeaderNavigator = () => {
     const Router = useRouter();
 
     return (
-        <nav className="bg-[var(--black)] border-b-[var(--mint)] border-b-2 py-5 px-12 flex flex-row justify-between items-center h-[10vh] w-[100vw]">
+        <nav className="bg-[var(--darkest-purple)] border-b-[var(--mint)] border-b-2 py-5 px-12 flex flex-row justify-between items-center h-[10vh] w-[100vw]">
             <div className="w-1">
                 <Link href={isAuthenticated ? '/hub' : '/'} className="title bold leading-6">
                     <FaDiceD20 size={42} />
