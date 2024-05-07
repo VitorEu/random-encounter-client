@@ -3,33 +3,240 @@
 @tailwind utilities;
 
 :root {
-  --whitesmoke: #F5F5F5;
-  --platinum: #E8E2E2;
-  --pumpkin: #FE7F2D;
-  --purple: #482973;
-  --black: #0E0E0E;
+	/* Generals */
+	--platinum: hsl(0, 12%, 90%);
+	--black: hsl(265, 32%, 12%);
 
-  --font-title: 32px
+	/* Grays */
+	--darkest-gray: hsl(267, 15%, 14%);
+	--darker-gray-2: hsl(264, 11%, 15%);
+	--darker-gray: hsl(264, 11%, 18%);
+	--dark-gray: hsl(267, 8%, 21%);
+	--gray: hsl(270, 6%, 26%);
+	--light-gray: hsl(270, 9%, 31%);
+	--lighter-gray: hsl(265, 7%, 35%);
+	--lighter-gray-2: hsl(267, 4%, 52%);
+	--lighter-gray-3: hsl(267, 5%, 66%);
+	--lighter-gray-4: hsl(260, 6%, 82%);
+	--lightest-gray: hsl(260, 6%, 90%);
+
+	/* MINTS - Primary */
+	--darkest-mint: hsl(144, 43%, 18%);
+	--darker-mint-2: hsl(144, 41%, 31%);
+	--darker-mint: hsl(144, 37%, 42%);
+	--dark-mint: hsl(144, 31%, 52%);
+	--mint: hsl(144, 42%, 64%);
+	--light-mint: hsl(156, 86%, 53%);
+	--lighter-mint: hsl(156, 72%, 76%);
+	--lightest-mint: hsl(156, 73%, 90%);
+
+	/* PURPLES - Accents */
+	--darkest-purple: hsl(276, 86%, 6%);
+	--darker-purple-2: hsl(275, 95%, 16%);
+	--darker-purple: hsl(275, 86%, 22%);
+	--dark-purple: hsl(275, 97%, 23%);
+	--purple: hsl(275, 100%, 30%);
+	--light-purple: hsl(275, 83%, 41%);
+	--lighter-purple: hsl(275, 86%, 45%);
+	--lighter-purple-2: hsl(275, 87%, 51%);
+	--lightest-purple: hsl(276, 50%, 82%);
+
+	--font-title: 32px;
+
+	--perspective: 5000px;
+	--rotateX: 0deg;
+	--rotateY: 0deg;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+	-webkit-text-fill-color: var(--platinum) !important;
+	transition: background-color 9999s ease-in-out 0s;
+}
+
+@layer utilities {
+	@variants responsive {
+		.no-scrollbar::-webkit-scrollbar {
+			display: none;
+		}
+
+		.no-scrollbar {
+			-ms-overflow-style: none;
+			scrollbar-width: none;
+		}
+	}
+}
+
+* {
+	background-repeat: no-repeat;
+}
+
+.bg-adventurers-flipped {
+	background-image: url("https://i.imgur.com/dHh1WWH.png");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
+}
+
+.bg-fizban {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/42WIy9aVykeIS7e9HEbOoz/c8ee80523a912c3c9bd26323e5be2bc8/Fizban_1920x1080_Wallpaper1.jpg");
+	background-position: -190px bottom;
+	border-radius: 16px;
+}
+
+.bg-giant-flipped {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/4ESOCp8aYFNJkSY5BG5yag/4799a4fe39a964459a7ad7031687ac0c/Volo_1920x1080_New_Wallpaper.jpeg");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
+}
+
+.bg-tasha-flipped {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/3lwEFqFyhil8tJ3FzGFRrR/5286da6768e05ecee6ade0d0486cd366/TCoE_1920x1080_Wallpaper.jpeg");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
+
+	background-position-x: -950px;
+	background-position-y: top;
+}
+
+.bg-tiamat-flipped {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/2Fz3lMJTrFYz5VwiZtnSIs/aade483b1d7ada301186a1fe01a0034c/Tiamat_1280x960.jpeg");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+	border-radius: 16px;
+}
+
+.bg-forest-flipped {
+	background-image: url("../../public/forest.png");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.bg-saltmarsh {
+	background-image: url("https://images.ctfassets.net/swt2dsco9mfe/4TcVaNoDqpYwpy4Hvti2Nt/a8502d12a90d5b92745dd8b827c064ef/Saltmarsh_1920x1080_WallpaperTemplate.jpeg");
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.mt-pump {
+	background-image: url("../../public/mt-pump.svg"),
+		url("../../public/mt-pump6.svg"), url("../../public/mt-pump4.svg"),
+		url("../../public/mt-pump2.svg");
+	background-position-y: bottom, 280px, 275px, 280px;
+}
+
+.mt-purp {
+	background-image: url("../../public/mt-green.svg"),
+		url("../../public/mt-green6.svg"), url("../../public/mt-green4.svg"),
+		url("../../public/mt-green2.svg");
+	background-position-y: bottom, 280px, 275px, 280px;
+}
+
+.flip {
+	-moz-transform: scaleX(-1);
+	-o-transform: scaleX(-1);
+	-webkit-transform: scaleX(-1);
+	transform: scaleX(-1);
+}
+
+.glass {
+	background: linear-gradient(
+		hsla(265, 13%, 26%, 0.6666666666666666) 55%,
+		hsla(265, 32%, 12%, 0.996078431372549)
+	);
+	border-radius: 10px;
+	box-shadow: 2px 4px 30px hsla(0, 0%, 0%, 0.9);
+	backdrop-filter: blur(9px);
+	-webkit-backdrop-filter: blur(9px);
+}
+
+.green-glass {
+	background: linear-gradient(
+		hsla(144, 42%, 64%, 0.6666666666666666) 55%,
+		hsla(133, 46%, 17%, 0.996078431372549)
+	);
+	border-radius: 10px;
+	box-shadow: 2px 4px 30px hsla(0, 0%, 0%, 0.9);
+	backdrop-filter: blur(9px);
+	-webkit-backdrop-filter: blur(9px);
 }
 
 body {
-  background: var(--whitesmoke);
-  margin: 0;
+	background: var(--darkest-gray);
+	margin: 0;
+	background-repeat: no-repeat;
+}
+
+option {
+	background-color: var(--black);
+	color: var(--platinum);
 }
 
 .bold {
-  font-weight: bold;
+	font-weight: bold;
 }
 
-.navbar {
-  color: var(--purpe);
-  background: var(--platinum);
-  padding: 25px;
-  padding-left: 50px;
+.title {
+	color: var(--platinum);
+	font-size: var(--font-title);
+	text-decoration: none;
+	border: 0;
 }
 
-.title { 
-    color: var(--purple);
-    font-size: var(--font-title);
-    text-decoration: none;
+.shadow-left {
+	box-shadow: -11px 0px 25px 9px hsla(0, 0%, 0%, 0.1);
+}
+
+.shadow-left-stronger {
+	box-shadow: -11px 0px 25px 9px hsla(0, 0%, 0%, 0.4);
+}
+
+.shadow-inset {
+	box-shadow: inset 0px 0px 29px 3px rgba(0, 0, 0, 0.1);
+}
+
+.drawer {
+	transition: all 125ms ease-out;
+	&:hover {
+		translate: 0px 10px;
+	}
+}
+
+@-webkit-keyframes from-left {
+	0% {
+		left: 0%;
+	}
+	100% {
+		left: 100%;
+	}
+}
+
+@keyframes from-left {
+	0% {
+		left: -200%;
+	}
+	100% {
+		left: 100%;
+	}
+}
+
+.card-tilt {
+	animation: from-left 125ms ease-out;
+	-webkit-animation: from-left 125ms ease-out;
 }
