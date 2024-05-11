@@ -9,11 +9,7 @@ export default function Page() {
 
     const Router = useRouter();
 
-    useEffect(() => {
-        if (!isAuthenticated) {
-            Router.push("/")
-        }
-    }, []);
+    useEffect(() => { if (!isAuthenticated) Router.push("/") }, []);
 
     return (
         <main className="bg-bottom p-[2.80rem] flex flex-row justify-center">

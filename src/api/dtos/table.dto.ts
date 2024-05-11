@@ -1,3 +1,4 @@
+import { SystemDTO } from "./system.dto";
 import { CompleteUserDTO, UserDTO } from "./user.dto";
 
 interface TableDTO {
@@ -14,6 +15,7 @@ interface CompleteTableDTO {
     table: TableDTO;
     owner: CompleteUserDTO;
     players: UserDTO[];
+    system: SystemDTO;
 }
 
 export type {

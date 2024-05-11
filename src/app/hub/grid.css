@@ -12,3 +12,16 @@
 .sidebar {
 	grid-area: 1 / 5 / 6 / 6;
 }
+
+.table-selector-inner-wrapper {
+	display: grid;
+	grid-template-columns: repeat(5, 5fr);
+	grid-template-rows: repeat(3, 5fr);
+	grid-column-gap: 0rem;
+	grid-row-gap: 2rem;
+	padding: 30px;
+}
+
+.table-selector-inner-wrapper > * {
+	width: 280px;
+}

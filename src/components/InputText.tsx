@@ -15,6 +15,7 @@ export interface InputTextProps {
     type?: HTMLInputTypeAttribute;
     required?: boolean;
     showEye?: boolean;
+    darkMode?: boolean;
 }
 
 function InputText({
@@ -28,6 +29,7 @@ function InputText({
     wClass = "w-72",
     required = false,
     showEye = false,
+    darkMode = false
 }: InputTextProps): JSX.Element {
 
     const [textValue, setTextValue] = useState(value);
@@ -35,7 +37,7 @@ function InputText({
 
     return (
         <div className="flex flex-col" id="input-container">
-            <label htmlFor={title} className={`text-[var(--platinum)] ml-1 select-none`}>
+            <label htmlFor={title} className={` ${darkMode ? 'text-[var(--darkest-purple)]' : 'text-[var(--platinum)]'} ml-1 select-none`}>
                 <span className="">
                     {title}
                     {required && title &&
@@ -49,7 +51,7 @@ function InputText({
                     </span>
                 }
                 <input
-                    className={`h-8 ${wClass} p-1 bg-black bg-opacity-0 outline-none border-b-2 rounded-s transition text-[var(--platinum)] focus:border-[var(--mint)] focus:bg-opacity-10`}
+                    className={`h-8  p-2 ${wClass} ${darkMode ? 'bg-[var(--lighter-gray-3)] bg-opacity-100 text-[var(--darkest-purple)]' : 'bg-black bg-opacity-0 text-[var(--platinum)]'} outline-none border-b-2 rounded-s transition focus:border-[var(--mint)] focus:bg-opacity-10 `}
                     id={title}
                     type={stateType}
                     required={required}
@@ -68,7 +70,7 @@ function InputText({
                                 color="var(--platinum)"
                                 className="cursor-pointer absolute mt-1 mr-1 select-none"
                                 size={21}
-                                onClick={() => setStateType('text')}
+                                onClick={() => setStateType(type || 'text')}
                             />
                             :
                             <FaEyeSlash

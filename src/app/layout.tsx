@@ -9,6 +9,7 @@ import { HeaderNavigator } from "@/components/HeaderNavigator";
 import { usePathname } from "next/navigation";
 import { isPublicRoute, isRestrictRoute } from "@/utils/route.util";
 import { TableProvider } from "@/contexts/TableContext";
+import { NewTableModal } from "@/components/modals/newTable.modal";
 
 const font = Roboto({
 	subsets: ["latin"],
@@ -37,6 +38,7 @@ export default function RootLayout({
 				{!isPublic &&
 					<AuthProvider>
 						<TableProvider>
+							<NewTableModal/>
 							<HeaderNavigator />
 							{children}
 						</TableProvider>

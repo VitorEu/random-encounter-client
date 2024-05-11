@@ -4,8 +4,14 @@
 
 :root {
 	/* Generals */
-	--platinum: hsl(0, 12%, 90%);
 	--black: hsl(265, 32%, 12%);
+	
+	/* Metals */
+	--platinum: hsl(0, 12%, 90%);
+	--polished-platinum: hsl(0, 12%, 95%);
+	--scarned-lead: hsl(276,15%,28%);
+	--lead: hsl(276,15%,38%);
+	--polished-lead: hsl(276,15%,48%);
 
 	/* Grays */
 	--darkest-gray: hsl(267, 15%, 14%);
